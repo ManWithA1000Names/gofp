@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"unicode"
 
 	"github.com/manwitha1000names/gofp/Basics"
 	"github.com/manwitha1000names/gofp/Char"
@@ -218,6 +219,15 @@ func ToUpper(s string) string {
 
 func ToLower(s string) string {
 	return strings.ToLower(s)
+}
+
+func Capitalize(s string) string {
+	runes := ToList(s)
+  if len(runes) == 0 || unicode.IsUpper(runes[0]) {
+    return s
+  }
+	runes[0] = unicode.ToUpper(runes[0])
+	return FromList(runes)
 }
 
 func Pad(new_len int, c rune, s string) string {
