@@ -1,6 +1,10 @@
 package Result
 
-import "github.com/manwitha1000names/gofp/Maybe"
+import (
+	"fmt"
+
+	"github.com/manwitha1000names/gofp/Maybe"
+)
 
 type Result[T any] struct {
 	err error
@@ -72,6 +76,20 @@ func AndThen[T, U any](f func(value T) Result[U], result Result[T]) Result[U] {
 	return f(result.Unwrap())
 }
 
+func Or[T any](r Result[T], result Result[T]) Result[T] {
+	if result.IsErr() {
+		return r
+	}
+	return result
+}
+
+func And[T any](r Result[T], result Result[T]) Result[T] {
+	if result.IsErr() {
+		return result
+	}
+	return r
+}
+
 func Map[T, U any](mapfn func(value T) U, result Result[T]) Result[U] {
 	if result.IsErr() {
 		return Err[U](result.UnwrapErr())
@@ -135,4 +153,34 @@ func Map5[a, b, c, d, e, value any](mapfn func(a a, b b, c c, d d, e e) value, r
 		return Err[value](resulte.UnwrapErr())
 	}
 	return Ok(mapfn(resulta.Unwrap(), resultb.Unwrap(), resultc.Unwrap(), resultd.Unwrap(), resulte.Unwrap()))
+}
+
+// GO SPECIFIC
+
+func FromValueOk[T any](value T, ok bool) Result[T] {
+	if ok {
+		return Err[T](fmt.Errorf("Operation failed."))
+	}
+	return Ok(value)
+}
+
+func FromPtrValueOk[T any](value *T, ok bool) Result[T] {
+	if ok {
+		return Err[T](fmt.Errorf("Operation failed."))
+	}
+	return Result[T]{ok: value, err: nil}
+}
+
+func FromValueErr[T any](value T, err error) Result[T] {
+	if err != nil {
+		return Err[T](err)
+	}
+	return Ok(value)
+}
+
+func FromPtrValueErr[T any](value *T, err error) Result[T] {
+	if err != nil {
+		return Err[T](err)
+	}
+	return Result[T]{ok: value, err: nil}
 }
