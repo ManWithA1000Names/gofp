@@ -1,9 +1,9 @@
 package Set
 
 import (
-	"github.com/manwitha1000names/yggdrasil/fp/Dict"
-	"github.com/manwitha1000names/yggdrasil/fp/List"
-	"github.com/manwitha1000names/yggdrasil/fp/Tuple"
+	"github.com/manwitha1000names/gofp/Dict"
+	"github.com/manwitha1000names/gofp/List"
+	"github.com/manwitha1000names/gofp/Tuple"
 )
 
 type Set[T comparable] struct {

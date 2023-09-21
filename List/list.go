@@ -1,11 +1,11 @@
 package List
 
-// import "github.com/manwitha1000names/yggdrasil/fp/Basics"
+// import "github.com/manwitha1000names/gofp/Basics"
 import (
 	"math/bits"
 
-	"github.com/manwitha1000names/yggdrasil/fp/Basics"
-	"github.com/manwitha1000names/yggdrasil/fp/Maybe"
+	"github.com/manwitha1000names/gofp/Basics"
+	"github.com/manwitha1000names/gofp/Maybe"
 )
 
 func clone[T any](value []T) []T {

@@ -5,11 +5,11 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/manwitha1000names/yggdrasil/fp/Basics"
-	"github.com/manwitha1000names/yggdrasil/fp/Char"
-	"github.com/manwitha1000names/yggdrasil/fp/List"
-	"github.com/manwitha1000names/yggdrasil/fp/Maybe"
-	"github.com/manwitha1000names/yggdrasil/fp/Tuple"
+	"github.com/manwitha1000names/gofp/Basics"
+	"github.com/manwitha1000names/gofp/Char"
+	"github.com/manwitha1000names/gofp/List"
+	"github.com/manwitha1000names/gofp/Maybe"
+	"github.com/manwitha1000names/gofp/Tuple"
 )
 
 func IsEmpty(s string) bool {

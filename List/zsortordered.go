@@ -6,7 +6,7 @@ package List
 import (
 	"math/bits"
 
-	"github.com/manwitha1000names/yggdrasil/fp/Basics"
+	"github.com/manwitha1000names/gofp/Basics"
 )
 
 type sortedHint = int

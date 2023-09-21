@@ -1,6 +1,6 @@
 package Result
 
-import "github.com/manwitha1000names/yggdrasil/fp/Maybe"
+import "github.com/manwitha1000names/gofp/Maybe"
 
 type Result[T any] struct {
 	err error
