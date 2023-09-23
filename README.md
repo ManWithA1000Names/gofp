@@ -1,4 +1,4 @@
-# A go library containing primitive functions to write functional go.
+# Functional programming primitives for go
 
 It contains functions such as:
 
