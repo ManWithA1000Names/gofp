@@ -21,7 +21,7 @@ func Singleton[T any](value T) []T {
 }
 
 func Repeat[T any](amount int, value T) []T {
-	list := make([]T, 0, amount)
+	list := make([]T, 0, Basics.Max(amount, 8))
 	for i := 0; i < amount; i++ {
 		list = append(list, value)
 	}
