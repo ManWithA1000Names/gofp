@@ -14,7 +14,3 @@ And much much more!
 It is based on [elm/core](https://package.elm-lang.org/packages/elm/core/latest/)
 
 Requires go 1.18 or greater.
-
-TODO:
-
-- [ ]: Add ForEach function.
