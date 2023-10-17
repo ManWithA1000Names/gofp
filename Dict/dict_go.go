@@ -23,3 +23,14 @@ func ForEach_par[Key comparable, Value any](fn func(key Key, value Value), m map
 	}
 	wg.Wait()
 }
+
+// Find the first value found that passes the testfn and return it.
+// The pointer returned, points to a copy of the value.
+func Find[Key comparable, Value any](testfn func(key Key, value Value) bool, dict map[Key]Value) *Value {
+	for key, value := range dict {
+		if testfn(key, value) {
+			return &value
+		}
+	}
+	return nil
+}

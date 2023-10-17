@@ -23,3 +23,14 @@ func ForEach_par[T comparable](fn func(value T), s Set[T]) {
 	}
 	wg.Wait()
 }
+
+// Find the first value found that passes the testfn and return it.
+// The pointer returned, points to a copy of the value.
+func Find[T comparable](testfn func(value T) bool, s Set[T]) *T {
+	for value := range s.m {
+		if testfn(value) {
+			return &value
+		}
+	}
+	return nil
+}
