@@ -17,7 +17,4 @@ Requires go 1.18 or greater.
 
 TODO:
 
-- [ ]: Make parallel versions where it makes sense.
-- [ ]: Make everything take a pointer to a value and not a copy.
 - [ ]: Add ForEach function.
-- [ ]: Make set use void instead of int.
