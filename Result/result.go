@@ -1,8 +1,6 @@
 package Result
 
 import (
-	"fmt"
-
 	"github.com/manwitha1000names/gofp/Maybe"
 )
 
@@ -105,7 +103,7 @@ func Or[T any](r Result[T], result Result[T]) Result[T] {
 // If the first result is 'Ok' then get the second result,
 // else get the first 'Err'.
 func And[T any](r Result[T], result Result[T]) Result[T] {
-	if result.IsErr() {
+	if r.IsOk() {
 		return result
 	}
 	return r
@@ -180,42 +178,4 @@ func Map5[a, b, c, d, e, value any](mapfn func(a a, b b, c c, d d, e e) value, r
 		return Err[value](resulte.UnwrapErr())
 	}
 	return Ok(mapfn(resulta.Unwrap(), resultb.Unwrap(), resultc.Unwrap(), resultd.Unwrap(), resulte.Unwrap()))
-}
-
-// GO SPECIFIC
-
-// Create a Result from the callic: value, ok := fn().
-//
-// Just use it like so: result := Result.FromValueOk(fn())
-func FromValueOk[T any](value T, ok bool) Result[T] {
-	if ok {
-		return Err[T](fmt.Errorf("Operation failed."))
-	}
-	return Ok(value)
-}
-
-// Same as FromValueOk but the value is a pointer.
-func FromPtrValueOk[T any](value *T, ok bool) Result[T] {
-	if ok {
-		return Err[T](fmt.Errorf("Operation failed."))
-	}
-	return Result[T]{ok: value, err: nil}
-}
-
-// Create a Result from the callic: value, err := fn().
-//
-// Just use it like so: result := Result.FromValueOk(fn())
-func FromValueErr[T any](value T, err error) Result[T] {
-	if err != nil {
-		return Err[T](err)
-	}
-	return Ok(value)
-}
-
-// Same as FromValueErr but the value is a pointer.
-func FromPtrValueErr[T any](value *T, err error) Result[T] {
-	if err != nil {
-		return Err[T](err)
-	}
-	return Result[T]{ok: value, err: nil}
 }

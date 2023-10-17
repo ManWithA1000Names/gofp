@@ -47,7 +47,8 @@ func Range(start, end int) []int {
 // Add an element to the front of a list.
 // This functions is IMMUTABLE and produces a completely new list!
 func Cons[T any](value T, list []T) []T {
-	return append(Singleton(value), list...)
+	new_list := make([]T, 0, 1+len(list))
+	return append(append(new_list, value), list...)
 }
 
 // TRANSFORM
@@ -211,11 +212,11 @@ func ConcatMap[T, U any](mapfn func(value T) []U, list []T) []U {
 // Places the given value between all members of the given list.
 // This functions is IMMUTABLE and produces a completely new list!
 func Intersperse[T any](value T, list []T) []T {
-	if len(list) < 2 {
+	length := len(list)
+	if length < 2 {
 		return list
 	}
-	length := len(list)
-	new_list := make([]T, 0, length)
+	new_list := make([]T, 0, 2*length-1)
 	for i, v := range list {
 		new_list = append(new_list, v)
 		if i != length-1 {
@@ -403,11 +404,12 @@ func Push[T any](value T, list []T) []T {
 //
 // This makes it pretty easy to pop the last element off of an array: slice 0 -1 array
 func Slice[T any](start int, stop int, list []T) []T {
+	length := len(list)
 	if start < 0 {
-		start = Basics.Max(len(list)+start, 0)
+		start = Basics.Max(length+start, 0)
 	}
 	if stop < 0 {
-		stop = Basics.Min(len(list)+stop, len(list))
+		stop = Basics.Min(length+stop, length)
 	}
 	if stop <= 0 || start >= stop {
 		return []T{}

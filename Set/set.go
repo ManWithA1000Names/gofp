@@ -8,27 +8,27 @@ import (
 
 // Represents a set of unique values.
 type Set[T comparable] struct {
-	m map[T]int
+	m map[T]struct{}
 }
 
 // BUILD
 
 // Create an empty set.
 func Empty[T comparable]() Set[T] {
-	return Set[T]{make(map[T]int)}
+	return Set[T]{make(map[T]struct{})}
 }
 
 // Create a set with one value.
 func Singleton[T comparable](value T) Set[T] {
-	new_map := make(map[T]int)
-	new_map[value] = 0
+	new_map := make(map[T]struct{})
+	new_map[value] = struct{}{}
 	return Set[T]{new_map}
 }
 
 // Insert a value into a set.
 // This functions is IMMUTABLE and produces a completely new set!
 func Insert[T comparable](value T, s Set[T]) Set[T] {
-	return Set[T]{Dict.Insert(value, 0, s.m)}
+	return Set[T]{Dict.Insert(value, struct{}{}, s.m)}
 }
 
 // Remove a value from a set.
@@ -85,8 +85,8 @@ func ToList[T comparable](s Set[T]) []T {
 
 // Convert a list into a set, removing any duplicates.
 func FromList[T comparable](list []T) Set[T] {
-	return Set[T]{Dict.FromList(List.Map(func(value T) Tuple.Tuple[T, int] {
-		return Tuple.Pair(value, 0)
+	return Set[T]{Dict.FromList(List.Map(func(value T) Tuple.Tuple[T, struct{}] {
+		return Tuple.Pair(value, struct{}{})
 	}, list))}
 }
 
@@ -95,9 +95,9 @@ func FromList[T comparable](list []T) Set[T] {
 // Map a function onto a set, creating a new set with no duplicates.
 // This functions is IMMUTABLE and produces a completely new set!
 func Map[T comparable, U comparable](mapfn func(value T) U, s Set[T]) Set[U] {
-	new_map := make(map[U]int, len(s.m))
+	new_map := make(map[U]struct{}, len(s.m))
 	for key := range s.m {
-		new_map[mapfn(key)] = 0
+		new_map[mapfn(key)] = struct{}{}
 	}
 	return Set[U]{new_map}
 }
@@ -117,7 +117,7 @@ func Foldr[T comparable, Acc any](reducer func(value T, acc Acc) Acc, init Acc, 
 // Only keep elements that pass the given test.
 // This functions is IMMUTABLE and produces a completely new set!
 func Filter[T comparable](testfn func(value T) bool, s Set[T]) Set[T] {
-	return Set[T]{Dict.Filter(func(value T, _ int) bool {
+	return Set[T]{Dict.Filter(func(value T, _ struct{}) bool {
 		return testfn(value)
 	}, s.m)}
 }

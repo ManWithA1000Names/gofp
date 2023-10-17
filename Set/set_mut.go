@@ -7,7 +7,7 @@ import "github.com/manwitha1000names/gofp/Dict"
 // Insert a value into a set.
 // This functions is MUTABLE and will change the set in place.
 func Insert_mut[T comparable](value T, s Set[T]) Set[T] {
-	s.m = Dict.Insert_mut(value, 0, s.m)
+	s.m = Dict.Insert_mut(value, struct{}{}, s.m)
 	return s
 }
 
@@ -49,7 +49,7 @@ func Diff_mut[T comparable](s Set[T], s1 Set[T]) Set[T] {
 // This functions is MUTABLE and will change the set in place.
 func Map_mut[T comparable](mapfn func(value T) T, s Set[T]) Set[T] {
 	for key := range s.m {
-		s.m[mapfn(key)] = 0
+		s.m[mapfn(key)] = struct{}{}
 	}
 	return s
 }
@@ -57,7 +57,7 @@ func Map_mut[T comparable](mapfn func(value T) T, s Set[T]) Set[T] {
 // Only keep elements that pass the given test.
 // This functions is MUTABLE and will change the set in place.
 func Filter_mut[T comparable](testfn func(value T) bool, s Set[T]) Set[T] {
-	s.m = Dict.Filter_mut(func(value T, _ int) bool {
+	s.m = Dict.Filter_mut(func(value T, _ struct{}) bool {
 		return testfn(value)
 	}, s.m)
 	return s

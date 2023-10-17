@@ -110,33 +110,3 @@ func And[T any](m Maybe[T], maybe Maybe[T]) Maybe[T] {
 	}
 	return maybe
 }
-
-// GO SPECIFIC
-
-func FromValueOk[T any](value T, ok bool) Maybe[T] {
-	if ok {
-		return Just(value)
-	}
-	return Nothing[T]()
-}
-
-func FromValuePtrOk[T any](value *T, ok bool) Maybe[T] {
-	if ok {
-		return Maybe[T]{just: value}
-	}
-	return Nothing[T]()
-}
-
-func FromValueErr[T any](value T, err error) Maybe[T] {
-	if err != nil {
-		return Nothing[T]()
-	}
-	return Just(value)
-}
-
-func FromPtrValueErr[T any](value *T, err error) Maybe[T] {
-	if err != nil {
-		return Nothing[T]()
-	}
-	return Maybe[T]{just: value}
-}
