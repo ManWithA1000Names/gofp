@@ -151,7 +151,7 @@ func All[T any](test func(value T) bool, list []T) bool {
 func Any[T any](test func(value T) bool, list []T) bool {
 	for _, v := range list {
 		if test(v) {
-			return false
+			return true
 		}
 	}
 	return false
