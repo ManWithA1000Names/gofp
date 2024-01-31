@@ -119,10 +119,10 @@ func FromList[Key comparable, Value any](list []Tuple.Tuple[Key, Value]) map[Key
 
 // Apply a function to all values in a dictionary.
 // This functions is IMMUTABLE and produces a completely new map!
-func Map[Key comparable, Value1 any, Value2 any](mapfn func(value Value1) Value2, m map[Key]Value1) map[Key]Value2 {
+func Map[Key comparable, Value1 any, Value2 any](mapfn func(key Key ,value Value1) Value2, m map[Key]Value1) map[Key]Value2 {
 	new_map := make(map[Key]Value2, len(m))
 	for _, key := range Keys(m) {
-		new_map[key] = mapfn(m[key])
+		new_map[key] = mapfn(key,m[key])
 	}
 	return new_map
 }

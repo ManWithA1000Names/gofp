@@ -29,9 +29,9 @@ func Remove_mut[Key comparable, Value any](key Key, m map[Key]Value) map[Key]Val
 
 // Apply a function to all values in a dictionary.
 // This functions is MUTABLE and will change the dict in place.
-func Map_mut[Key comparable, Value any](mapfn func(value Value) Value, m map[Key]Value) map[Key]Value {
+func Map_mut[Key comparable, Value any](mapfn func(key Key, value Value) Value, m map[Key]Value) map[Key]Value {
 	for _, key := range Keys(m) {
-		m[key] = mapfn(m[key])
+		m[key] = mapfn(key, m[key])
 	}
 	return m
 }

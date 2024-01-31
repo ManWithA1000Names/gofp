@@ -6,14 +6,14 @@ import "sync"
 
 // Apply a function to all values in a dictionary.
 // This functions is IMMUTABLE and produces a completely new map!
-func Map_par[Key comparable, Value1 any, Value2 any](mapfn func(value Value1) Value2, m map[Key]Value1) map[Key]Value2 {
+func Map_par[Key comparable, Value1 any, Value2 any](mapfn func(key Key, value Value1) Value2, m map[Key]Value1) map[Key]Value2 {
 	new_map := make(map[Key]Value2, len(m))
 	var wg sync.WaitGroup
 	wg.Add(len(m))
 	for _, key := range Keys(m) {
 		go func(key Key) {
 			defer wg.Done()
-			new_map[key] = mapfn(m[key])
+			new_map[key] = mapfn(key, m[key])
 		}(key)
 	}
 	wg.Wait()
