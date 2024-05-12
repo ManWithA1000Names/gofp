@@ -173,6 +173,36 @@ func Minimum[T Basics.Ordered](list []T) Maybe.Maybe[T] {
 	return Maybe.Just(Basics.Min(list[0], list[1:]...))
 }
 
+func MaximumIndex[T Basics.Ordered](list []T) Maybe.Maybe[int] {
+	if len(list) == 0 {
+		return Maybe.Nothing[int]()
+	}
+	max_index := 0
+	max_val := list[max_index]
+	for i, val := range list[1:] {
+		if val > max_val {
+			max_val = val
+			max_index = i
+		}
+	}
+	return Maybe.Just(max_index)
+}
+
+func MinimumIndex[T Basics.Ordered](list []T) Maybe.Maybe[int] {
+	if len(list) == 0 {
+		return Maybe.Nothing[int]()
+	}
+	min_index := 0
+	min_val := list[min_index]
+	for i, val := range list {
+		if val < min_val {
+			min_val = val
+			min_index = i
+		}
+	}
+	return Maybe.Just(min_index)
+}
+
 // Get the sum of the list elements.
 func Sum[T Basics.Number](list []T) Maybe.Maybe[T] {
 	if len(list) == 0 {
