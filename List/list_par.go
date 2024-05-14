@@ -4,7 +4,7 @@ import (
 	"sync"
 
 	"github.com/manwitha1000names/gofp/Basics"
-	"github.com/manwitha1000names/gofp/Maybe"
+	. "github.com/manwitha1000names/gofp/MaybeResult"
 )
 
 // TRANSFORM
@@ -78,7 +78,7 @@ func Filter_par[T any](testfn func(value T) bool, list []T) []T {
 // Filter out certain values.
 // This functions is IMMUTABLE and produces a completely new list!
 // Ordering IS NOT preserved!
-func FilterMap_par[T, U any](testmapfn func(value T) Maybe.Maybe[U], list []T) []U {
+func FilterMap_par[T, U any](testmapfn func(value T) Maybe[U], list []T) []U {
 	length := len(list)
 	new_list := make([]U, 0, length)
 	ch := make(chan U, length)
@@ -89,10 +89,7 @@ func FilterMap_par[T, U any](testmapfn func(value T) Maybe.Maybe[U], list []T) [
 	for _, v := range list {
 		go func(v T) {
 			defer wg.Done()
-			res := testmapfn(v)
-			if res.IsJust() {
-				ch <- res.Unwrap()
-			}
+			testmapfn(v).Then(func(value U) { ch <- value })
 		}(v)
 	}
 

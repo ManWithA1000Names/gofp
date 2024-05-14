@@ -4,7 +4,7 @@ import (
 	"math/bits"
 
 	"github.com/manwitha1000names/gofp/Basics"
-	"github.com/manwitha1000names/gofp/Maybe"
+	. "github.com/manwitha1000names/gofp/MaybeResult"
 	"github.com/manwitha1000names/gofp/Tuple"
 )
 
@@ -103,7 +103,7 @@ func Filter[T any](testfn func(value T) bool, list []T) []T {
 
 // Filter out certain values.
 // This functions is IMMUTABLE and produces a completely new list!
-func FilterMap[T, U any](testmapfn func(value T) Maybe.Maybe[U], list []T) []U {
+func FilterMap[T, U any](testmapfn func(value T) Maybe[U], list []T) []U {
 	new_list := make([]U, 0, len(list))
 	for _, v := range list {
 		res := testmapfn(v)
@@ -158,24 +158,24 @@ func Any[T any](test func(value T) bool, list []T) bool {
 }
 
 // Find the maximum element in a non-empty list
-func Maximum[T Basics.Ordered](list []T) Maybe.Maybe[T] {
+func Maximum[T Basics.Ordered](list []T) Maybe[T] {
 	if len(list) == 0 {
-		return Maybe.Nothing[T]()
+		return Nothing[T]()
 	}
-	return Maybe.Just(Basics.Max(list[0], list[1:]...))
+	return Just(Basics.Max(list[0], list[1:]...))
 }
 
 // Find the minimum element in a non-empty list.
-func Minimum[T Basics.Ordered](list []T) Maybe.Maybe[T] {
+func Minimum[T Basics.Ordered](list []T) Maybe[T] {
 	if len(list) == 0 {
-		return Maybe.Nothing[T]()
+		return Nothing[T]()
 	}
-	return Maybe.Just(Basics.Min(list[0], list[1:]...))
+	return Just(Basics.Min(list[0], list[1:]...))
 }
 
-func MaximumIndex[T Basics.Ordered](list []T) Maybe.Maybe[int] {
+func MaximumIndex[T Basics.Ordered](list []T) Maybe[int] {
 	if len(list) == 0 {
-		return Maybe.Nothing[int]()
+		return Nothing[int]()
 	}
 	max_index := 0
 	max_val := list[max_index]
@@ -185,12 +185,12 @@ func MaximumIndex[T Basics.Ordered](list []T) Maybe.Maybe[int] {
 			max_index = i
 		}
 	}
-	return Maybe.Just(max_index)
+	return Just(max_index)
 }
 
-func MinimumIndex[T Basics.Ordered](list []T) Maybe.Maybe[int] {
+func MinimumIndex[T Basics.Ordered](list []T) Maybe[int] {
 	if len(list) == 0 {
-		return Maybe.Nothing[int]()
+		return Nothing[int]()
 	}
 	min_index := 0
 	min_val := list[min_index]
@@ -200,23 +200,23 @@ func MinimumIndex[T Basics.Ordered](list []T) Maybe.Maybe[int] {
 			min_index = i
 		}
 	}
-	return Maybe.Just(min_index)
+	return Just(min_index)
 }
 
 // Get the sum of the list elements.
-func Sum[T Basics.Number](list []T) Maybe.Maybe[T] {
+func Sum[T Basics.Number](list []T) Maybe[T] {
 	if len(list) == 0 {
-		return Maybe.Nothing[T]()
+		return Nothing[T]()
 	}
-	return Maybe.Just(Foldl(Basics.Add[T], T(0), list))
+	return Just(Foldl(Basics.Add[T], T(0), list))
 }
 
 // Get the product of the list elements.
-func Product[T Basics.Number](list []T) Maybe.Maybe[T] {
+func Product[T Basics.Number](list []T) Maybe[T] {
 	if len(list) == 0 {
-		return Maybe.Nothing[T]()
+		return Nothing[T]()
 	}
-	return Maybe.Just(Foldl(Basics.Mul[T], T(0), list))
+	return Just(Foldl(Basics.Mul[T], T(0), list))
 }
 
 // COMBINE
@@ -339,19 +339,19 @@ func IsEmpty[T any](list []T) bool {
 }
 
 // Extract the first element of a list.
-func Head[T any](list []T) Maybe.Maybe[T] {
+func Head[T any](list []T) Maybe[T] {
 	if len(list) == 0 {
-		return Maybe.Nothing[T]()
+		return Nothing[T]()
 	}
-	return Maybe.Just(list[0])
+	return Just(list[0])
 }
 
 // Extract the rest of the list.
-func Tail[T any](list []T) Maybe.Maybe[[]T] {
+func Tail[T any](list []T) Maybe[[]T] {
 	if len(list) == 0 {
-		return Maybe.Nothing[[]T]()
+		return Nothing[[]T]()
 	}
-	return Maybe.Just(list[1:])
+	return Just(list[1:])
 }
 
 // Take the first n members of a list.
@@ -400,11 +400,11 @@ func Initialize[T any](n int, mapfn func(index int) T) []T {
 }
 
 // Return Just the element at the index or Nothing if the index is out of range.
-func Get[T any](index int, list []T) Maybe.Maybe[T] {
+func Get[T any](index int, list []T) Maybe[T] {
 	if index >= len(list) || index < 0 {
-		return Maybe.Nothing[T]()
+		return Nothing[T]()
 	}
-	return Maybe.Just(list[index])
+	return Just(list[index])
 }
 
 // Set the element at a particular index. Returns an updated array.

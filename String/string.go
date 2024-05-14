@@ -9,7 +9,7 @@ import (
 	"github.com/manwitha1000names/gofp/Basics"
 	"github.com/manwitha1000names/gofp/Char"
 	"github.com/manwitha1000names/gofp/List"
-	"github.com/manwitha1000names/gofp/Maybe"
+	. "github.com/manwitha1000names/gofp/MaybeResult"
 	"github.com/manwitha1000names/gofp/Tuple"
 )
 
@@ -179,12 +179,12 @@ func Indeces(sub string, s string) []int {
 // INT CONVERSIONS
 
 // Try to convert a string into an int, failing on improperly formatted strings.
-func ToInt(s string) Maybe.Maybe[int] {
+func ToInt(s string) Maybe[int] {
 	i, err := strconv.ParseInt(s, 0, 32)
 	if err != nil {
-		return Maybe.Nothing[int]()
+		return Nothing[int]()
 	}
-	return Maybe.Just(int(i))
+	return Just(int(i))
 }
 
 // Convert an Int to a String.
@@ -195,12 +195,12 @@ func FromInt[N Basics.Int](i N) string {
 // FLOAT CONVERSIONS
 
 // Try to convert a string into a float, failing on improperly formatted strings.
-func ToFloat(s string) Maybe.Maybe[float64] {
+func ToFloat(s string) Maybe[float64] {
 	i, err := strconv.ParseFloat(s, 64)
 	if err != nil {
-		return Maybe.Nothing[float64]()
+		return Nothing[float64]()
 	}
-	return Maybe.Just(i)
+	return Just(i)
 }
 
 // Convert a Float to a String.
@@ -222,11 +222,11 @@ func Cons(c rune, s string) string {
 
 // Split a non-empty string into its head and tail.
 // This lets you pattern match on strings exactly as you would with lists.
-func Uncons(s string) Maybe.Maybe[Tuple.Tuple[rune, string]] {
+func Uncons(s string) Maybe[Tuple.Tuple[rune, string]] {
 	if IsEmpty(s) {
-		return Maybe.Nothing[Tuple.Tuple[rune, string]]()
+		return Nothing[Tuple.Tuple[rune, string]]()
 	}
-	return Maybe.Just(Tuple.Pair(ToList(s)[0], s[1:]))
+	return Just(Tuple.Pair(ToList(s)[0], s[1:]))
 }
 
 // LIST CONVERSIONS

@@ -2,7 +2,7 @@ package Dict
 
 import (
 	"github.com/manwitha1000names/gofp/List"
-	"github.com/manwitha1000names/gofp/Maybe"
+	. "github.com/manwitha1000names/gofp/MaybeResult"
 	"github.com/manwitha1000names/gofp/Tuple"
 )
 
@@ -73,11 +73,9 @@ func Member[Key comparable, Value any](key Key, m map[Key]Value) bool {
 
 // Get the value associated with a key. If the key is not found, return Nothing.
 // This is useful when you are not sure if a key will be in the dictionary.
-func Get[Key comparable, Value any](key Key, m map[Key]Value) Maybe.Maybe[Value] {
-	if value, ok := m[key]; ok {
-		return Maybe.Just(value)
-	}
-	return Maybe.Nothing[Value]()
+func Get[Key comparable, Value any](key Key, m map[Key]Value) Maybe[Value] {
+	value, ok := m[key]
+	return TupleToMaybe(value, ok)
 }
 
 // Determine the number of key-value pairs in the dictionary.
@@ -119,10 +117,10 @@ func FromList[Key comparable, Value any](list []Tuple.Tuple[Key, Value]) map[Key
 
 // Apply a function to all values in a dictionary.
 // This functions is IMMUTABLE and produces a completely new map!
-func Map[Key comparable, Value1 any, Value2 any](mapfn func(key Key ,value Value1) Value2, m map[Key]Value1) map[Key]Value2 {
+func Map[Key comparable, Value1 any, Value2 any](mapfn func(key Key, value Value1) Value2, m map[Key]Value1) map[Key]Value2 {
 	new_map := make(map[Key]Value2, len(m))
 	for _, key := range Keys(m) {
-		new_map[key] = mapfn(key,m[key])
+		new_map[key] = mapfn(key, m[key])
 	}
 	return new_map
 }

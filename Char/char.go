@@ -24,7 +24,7 @@ func IsDigit(c rune) bool {
 
 // Detect upper case and lower case unicode characters.
 func IsAlphaNum(c rune) bool {
-	return IsAlpha(c) || IsDigit(c)
+	return unicode.IsLetter(c) || unicode.IsDigit(c)
 }
 
 // Detect space unicode characters.

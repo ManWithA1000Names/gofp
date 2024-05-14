@@ -221,7 +221,7 @@ func RemainderBy[T Int](by, base T) T {
 
 // Negate a number.
 func Negate[T SignedNumbers](n T) T {
-	return n * (T)(-1)
+	return n * T(-1)
 }
 
 // Clamps a number within a given range.
