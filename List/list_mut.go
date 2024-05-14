@@ -4,7 +4,7 @@ import (
 	"math/bits"
 
 	"github.com/manwitha1000names/gofp/Basics"
-	"github.com/manwitha1000names/gofp/Maybe"
+	. "github.com/manwitha1000names/gofp/MaybeResult"
 )
 
 // TRANSFORM
@@ -42,7 +42,7 @@ func Filter_mut[T any](testfn func(value T) bool, list []T) []T {
 
 // Filter out certain values.
 // This functions is MUTABLE and will change the list in place.
-func FilterMap_mut[T any](testmapfn func(value T) Maybe.Maybe[T], list []T) []T {
+func FilterMap_mut[T any](testmapfn func(value T) Maybe[T], list []T) []T {
 	i := 0
 	for _, v := range list {
 		new_value := testmapfn(v)

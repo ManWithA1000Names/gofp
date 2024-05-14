@@ -1,6 +1,10 @@
 package Dict
 
-import "sync"
+import (
+	"sync"
+
+	. "github.com/manwitha1000names/gofp/MaybeResult"
+)
 
 // Perform an action for each element of a dict.
 // A.K.A Side-effect heaven.
@@ -25,12 +29,11 @@ func ForEach_par[Key comparable, Value any](fn func(key Key, value Value), m map
 }
 
 // Find the first value found that passes the testfn and return it.
-// The pointer returned, points to a copy of the value.
-func Find[Key comparable, Value any](testfn func(key Key, value Value) bool, dict map[Key]Value) *Value {
+func Find[Key comparable, Value any](testfn func(key Key, value Value) bool, dict map[Key]Value) Maybe[Value] {
 	for key, value := range dict {
 		if testfn(key, value) {
-			return &value
+			return Just(value)
 		}
 	}
-	return nil
+	return Nothing[Value]()
 }
