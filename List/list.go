@@ -3,9 +3,9 @@ package List
 import (
 	"math/bits"
 
-	"github.com/manwitha1000names/gofp/Basics"
-	. "github.com/manwitha1000names/gofp/MaybeResult"
-	"github.com/manwitha1000names/gofp/Tuple"
+	"github.com/manwitha1000names/gofp/v2/Basics"
+	. "github.com/manwitha1000names/gofp/v2/MaybeResult"
+	"github.com/manwitha1000names/gofp/v2/Tuple"
 )
 
 func clone[T any](value []T) []T {

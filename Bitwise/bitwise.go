@@ -1,6 +1,6 @@
 package Bitwise
 
-import "github.com/manwitha1000names/gofp/Basics"
+import "github.com/manwitha1000names/gofp/v2/Basics"
 
 // Bitwise AND
 func And[T Basics.Int](a, b T) T {

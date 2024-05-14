@@ -6,11 +6,11 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/manwitha1000names/gofp/Basics"
-	"github.com/manwitha1000names/gofp/Char"
-	"github.com/manwitha1000names/gofp/List"
-	. "github.com/manwitha1000names/gofp/MaybeResult"
-	"github.com/manwitha1000names/gofp/Tuple"
+	"github.com/manwitha1000names/gofp/v2/Basics"
+	"github.com/manwitha1000names/gofp/v2/Char"
+	"github.com/manwitha1000names/gofp/v2/List"
+	. "github.com/manwitha1000names/gofp/v2/MaybeResult"
+	"github.com/manwitha1000names/gofp/v2/Tuple"
 )
 
 // Determine if a string is empty.

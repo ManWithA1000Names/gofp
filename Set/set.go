@@ -1,9 +1,9 @@
 package Set
 
 import (
-	"github.com/manwitha1000names/gofp/Dict"
-	"github.com/manwitha1000names/gofp/List"
-	"github.com/manwitha1000names/gofp/Tuple"
+	"github.com/manwitha1000names/gofp/v2/Dict"
+	"github.com/manwitha1000names/gofp/v2/List"
+	"github.com/manwitha1000names/gofp/v2/Tuple"
 )
 
 // Represents a set of unique values.

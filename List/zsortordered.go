@@ -6,7 +6,7 @@ package List
 import (
 	"math/bits"
 
-	"github.com/manwitha1000names/gofp/Basics"
+	"github.com/manwitha1000names/gofp/v2/Basics"
 )
 
 type sortedHint = int

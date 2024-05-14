@@ -3,7 +3,7 @@ package Dict
 import (
 	"sync"
 
-	. "github.com/manwitha1000names/gofp/MaybeResult"
+	. "github.com/manwitha1000names/gofp/v2/MaybeResult"
 )
 
 // Perform an action for each element of a dict.

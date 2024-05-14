@@ -1,6 +1,6 @@
 package String
 
-import "github.com/manwitha1000names/gofp/List"
+import "github.com/manwitha1000names/gofp/v2/List"
 
 // HIGHER-ORDER FUNCTIONS
 
