@@ -138,6 +138,17 @@ func (m Maybe[T]) AndThen(fn func(value T) Maybe[T]) Maybe[T] {
 	return m
 }
 
+// Chain together many computations that may fail executing the chain when a computation fails.
+//
+// Just(T) => Just(T)
+// Nothing => fn()
+func (m Maybe[T]) OrThen(fn func() Maybe[T]) Maybe[T] {
+	if m.isJust {
+		return m
+	}
+	return fn()
+}
+
 func (m Maybe[T]) Then(fn func(value T)) {
 	if m.isJust {
 		fn(m.value)
