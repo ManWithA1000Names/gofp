@@ -95,11 +95,11 @@ func (r Result[T]) OrValue(value T) T {
 	return value
 }
 
-func (r Result[T]) OrElse(fn func() T) T {
+func (r Result[T]) OrElse(fn func(err error) T) T {
 	if r.IsOk() {
 		return r.value
 	}
-	return fn()
+	return fn(r.err)
 }
 
 func (r Result[T]) Map(fn func(value T) T) Result[T] {
