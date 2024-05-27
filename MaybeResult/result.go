@@ -127,9 +127,9 @@ func (r Result[T]) AndThen(fn func(value T) Result[T]) Result[T] {
 	return r
 }
 
-func (r Result[T]) OrThen(fn func() Result[T]) Result[T] {
+func (r Result[T]) OrThen(fn func(err error) Result[T]) Result[T] {
 	if r.IsErr() {
-		return fn()
+		return fn(r.err)
 	}
 	return r
 }
