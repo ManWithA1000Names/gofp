@@ -1,10 +1,11 @@
 package MaybeResult
 
 import (
+	"errors"
 	"fmt"
 )
 
-var unwrapped_nothing = fmt.Errorf("Tried to unwrap a `Maybe` that was `Nothing`.")
+var ErrNothing = errors.New("Maybe is of the `Nothing` variant.")
 
 // Represent values that may or may not exist.
 // It can be useful if you have a record field that is only filled in sometimes.
@@ -76,7 +77,7 @@ func (m Maybe[T]) IsNothing() bool {
 //	Nothing => PANIC!
 func (m Maybe[T]) Unwrap() T {
 	if !m.isJust {
-		panic(unwrapped_nothing)
+		panic(fmt.Errorf("Tried to unwrap a `Maybe` that was `Nothing`."))
 	}
 	return m.value
 }
@@ -198,4 +199,25 @@ func (m Maybe[T]) Format(f fmt.State, c rune) {
 	} else {
 		f.Write([]byte("Nothing"))
 	}
+}
+
+func (m Maybe[T]) Error() string {
+	if m.IsJust() {
+		panic(fmt.Errorf("Called Error() method on a Maybe that was of the `Just` Variant."))
+	}
+	return ErrNothing.Error()
+}
+
+func (m Maybe[T]) Is(err error) bool {
+	if m.IsJust() {
+		return false
+	}
+	return errors.Is(ErrNothing, err)
+}
+
+func (m Maybe[T]) As(err any) bool {
+	if m.IsJust() {
+		return false
+	}
+	return errors.As(ErrNothing, err)
 }

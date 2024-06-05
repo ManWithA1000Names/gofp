@@ -1,10 +1,9 @@
 package MaybeResult
 
 import (
+	"errors"
 	"fmt"
 )
-
-var unwrapping_err_while_is_ok = fmt.Errorf("Tried UnrwappingErr on a Ok value.")
 
 // A Result is either Ok meaning the computation succeeded,
 // or it is an Err meaning that there was some failure.
@@ -65,7 +64,7 @@ func (r Result[T]) Unwrap() T {
 // It panics if Result is the 'Ok' variant.
 func (r Result[T]) UnwrapErr() error {
 	if r.IsOk() {
-		panic(unwrapping_err_while_is_ok)
+		panic(fmt.Errorf("Tried UnrwappingErr on a Ok value."))
 	}
 	return r.err
 }
@@ -160,4 +159,23 @@ func (r Result[T]) Format(f fmt.State, c rune) {
 	} else {
 		f.Write([]byte("Err(" + r.err.Error() + ")"))
 	}
+}
+
+func (r Result[T]) Error() string {
+	return r.UnwrapErr().Error()
+}
+
+// Unwrap the err. For the use with the errors.As function.
+func (r Result[T]) As(target any) bool {
+	if r.IsOk() {
+		return false
+	}
+	return errors.As(r.err, target)
+}
+
+func (r Result[T]) Is(err error) bool {
+	if r.IsOk() {
+		return false
+	}
+	return errors.Is(r.err, err)
 }
