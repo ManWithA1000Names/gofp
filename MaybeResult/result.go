@@ -164,7 +164,7 @@ func (r Result[T]) Unwrap() error {
 func (r Result[T]) Error() string {
 	err := r.Unwrap()
 	if err == nil {
-		panic(fmt.Errorf("Called the `Unwrap` method on a `Result` of the `Ok` variant."))
+		panic(fmt.Errorf("Called the `Error` method on a `Result` of the `Ok` variant."))
 	}
 
 	return err.Error()
