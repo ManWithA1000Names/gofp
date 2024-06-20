@@ -55,7 +55,7 @@ func (r Result[T]) IsErr() bool {
 // It panics if Result is the 'Err' variant.
 func (r Result[T]) Expect() T {
 	if r.IsErr() {
-		panic(r.err)
+		panic(fmt.Errorf("Result expected value, found error: %w", r.err))
 	}
 	return r.value
 }
