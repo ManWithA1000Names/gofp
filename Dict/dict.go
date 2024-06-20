@@ -1,9 +1,9 @@
 package Dict
 
 import (
-	"github.com/manwitha1000names/gofp/v2/List"
-	. "github.com/manwitha1000names/gofp/v2/MaybeResult"
-	"github.com/manwitha1000names/gofp/v2/Tuple"
+	"github.com/manwitha1000names/gofp/v3/List"
+	. "github.com/manwitha1000names/gofp/v3/MaybeResult"
+	"github.com/manwitha1000names/gofp/v3/Tuple"
 )
 
 func clone[Key comparable, Value any](m map[Key]Value) map[Key]Value {

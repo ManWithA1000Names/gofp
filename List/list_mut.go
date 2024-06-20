@@ -3,8 +3,8 @@ package List
 import (
 	"math/bits"
 
-	"github.com/manwitha1000names/gofp/v2/Basics"
-	. "github.com/manwitha1000names/gofp/v2/MaybeResult"
+	"github.com/manwitha1000names/gofp/v3/Basics"
+	. "github.com/manwitha1000names/gofp/v3/MaybeResult"
 )
 
 // TRANSFORM
@@ -47,7 +47,7 @@ func FilterMap_mut[T any](testmapfn func(value T) Maybe[T], list []T) []T {
 	for _, v := range list {
 		new_value := testmapfn(v)
 		if new_value.IsJust() {
-			list[i] = new_value.Unwrap()
+			list[i] = new_value.Expect()
 			i += 1
 		}
 	}

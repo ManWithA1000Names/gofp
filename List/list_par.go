@@ -3,8 +3,8 @@ package List
 import (
 	"sync"
 
-	"github.com/manwitha1000names/gofp/v2/Basics"
-	. "github.com/manwitha1000names/gofp/v2/MaybeResult"
+	"github.com/manwitha1000names/gofp/v3/Basics"
+	. "github.com/manwitha1000names/gofp/v3/MaybeResult"
 )
 
 // TRANSFORM

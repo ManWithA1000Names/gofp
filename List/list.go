@@ -3,9 +3,9 @@ package List
 import (
 	"math/bits"
 
-	"github.com/manwitha1000names/gofp/v2/Basics"
-	. "github.com/manwitha1000names/gofp/v2/MaybeResult"
-	"github.com/manwitha1000names/gofp/v2/Tuple"
+	"github.com/manwitha1000names/gofp/v3/Basics"
+	. "github.com/manwitha1000names/gofp/v3/MaybeResult"
+	"github.com/manwitha1000names/gofp/v3/Tuple"
 )
 
 func clone[T any](value []T) []T {
@@ -108,7 +108,7 @@ func FilterMap[T, U any](testmapfn func(value T) Maybe[U], list []T) []U {
 	for _, v := range list {
 		res := testmapfn(v)
 		if res.IsJust() {
-			new_list = append(new_list, res.Unwrap())
+			new_list = append(new_list, res.Expect())
 		}
 	}
 	return new_list

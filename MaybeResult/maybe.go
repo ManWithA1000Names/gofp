@@ -75,9 +75,9 @@ func (m Maybe[T]) IsNothing() bool {
 //
 //	Just(T) => T
 //	Nothing => PANIC!
-func (m Maybe[T]) Unwrap() T {
+func (m Maybe[T]) Expect() T {
 	if !m.isJust {
-		panic(fmt.Errorf("Tried to unwrap a `Maybe` that was `Nothing`."))
+		panic(fmt.Errorf("Expect `Maybe` to be of `Just` variant but was of `Nothing`."))
 	}
 	return m.value
 }
@@ -94,7 +94,7 @@ func (m Maybe[T]) OrDefault() T {
 //
 //	Just(T) => T
 //	Nothing => parameter value T
-func (m Maybe[T]) OrValue(value T) T {
+func (m Maybe[T]) WithDefault(value T) T {
 	if m.isJust {
 		return m.value
 	}
@@ -195,10 +195,17 @@ func (m Maybe[T]) ToResult() Result[T] {
 
 func (m Maybe[T]) Format(f fmt.State, c rune) {
 	if m.isJust {
-		f.Write([]byte("Just(" + fmt.Sprint(m.value) + ")"))
+		_, _ = f.Write([]byte("Just(" + fmt.Sprint(m.value) + ")"))
 	} else {
-		f.Write([]byte("Nothing"))
+		_, _ = f.Write([]byte("Nothing"))
 	}
+}
+
+func (m Maybe[T]) Unwrap() error {
+	if m.IsJust() {
+		return nil
+	}
+	return ErrNothing
 }
 
 func (m Maybe[T]) Error() string {

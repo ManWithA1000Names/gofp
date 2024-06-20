@@ -3,8 +3,8 @@ package Set
 import (
 	"sync"
 
-	"github.com/manwitha1000names/gofp/v2/Dict"
-	"github.com/manwitha1000names/gofp/v2/List"
+	"github.com/manwitha1000names/gofp/v3/Dict"
+	"github.com/manwitha1000names/gofp/v3/List"
 )
 
 // TRANSFORM

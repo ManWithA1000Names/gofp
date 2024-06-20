@@ -51,22 +51,13 @@ func (r Result[T]) IsErr() bool {
 	return r.err != nil
 }
 
-// Unwrap the Result type and the get the underlying 'Ok' value.
+// Expects the Result to b e of the `Ok` variant and gets the underlying value.
 // It panics if Result is the 'Err' variant.
-func (r Result[T]) Unwrap() T {
+func (r Result[T]) Expect() T {
 	if r.IsErr() {
 		panic(r.err)
 	}
 	return r.value
-}
-
-// Unwrap the Result type and the get the underlying 'Err' value.
-// It panics if Result is the 'Ok' variant.
-func (r Result[T]) UnwrapErr() error {
-	if r.IsOk() {
-		panic(fmt.Errorf("Tried UnrwappingErr on a Ok value."))
-	}
-	return r.err
 }
 
 func (r Result[T]) Ok() Maybe[T] {
@@ -87,7 +78,7 @@ func (r Result[T]) OrDefault() T {
 	return r.value
 }
 
-func (r Result[T]) OrValue(value T) T {
+func (r Result[T]) WithDefault(value T) T {
 	if r.IsOk() {
 		return r.value
 	}
@@ -155,17 +146,31 @@ func (r Result[T]) ToMaybe() Maybe[T] {
 
 func (r Result[T]) Format(f fmt.State, c rune) {
 	if r.IsOk() {
-		f.Write([]byte("Ok(" + fmt.Sprint(r.value) + ")"))
+		_, _ = f.Write([]byte("Ok(" + fmt.Sprint(r.value) + ")"))
 	} else {
-		f.Write([]byte("Err(" + r.err.Error() + ")"))
+		_, _ = f.Write([]byte("Err(" + r.err.Error() + ")"))
 	}
 }
 
-func (r Result[T]) Error() string {
-	return r.UnwrapErr().Error()
+// For working with the `errors`.Unwrap functionallity.
+func (r Result[T]) Unwrap() error {
+	if r.IsOk() {
+		return nil
+	}
+	return r.err
 }
 
-// Unwrap the err. For the use with the errors.As function.
+// Result implenents it self the `error` interface, proxying for its underlying error if there is one.
+func (r Result[T]) Error() string {
+	err := r.Unwrap()
+	if err == nil {
+		panic(fmt.Errorf("Called the `Unwrap` method on a `Result` of the `Ok` variant."))
+	}
+
+	return err.Error()
+}
+
+// For the use with the errors.As function.
 func (r Result[T]) As(target any) bool {
 	if r.IsOk() {
 		return false
@@ -173,6 +178,7 @@ func (r Result[T]) As(target any) bool {
 	return errors.As(r.err, target)
 }
 
+// For the use with the errors.Is function.
 func (r Result[T]) Is(err error) bool {
 	if r.IsOk() {
 		return false

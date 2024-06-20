@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	. "github.com/manwitha1000names/gofp/v2/MaybeResult"
+	. "github.com/manwitha1000names/gofp/v3/MaybeResult"
 )
 
 type ErrorYes struct {

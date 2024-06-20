@@ -1,6 +1,6 @@
 package Set
 
-import "github.com/manwitha1000names/gofp/v2/Dict"
+import "github.com/manwitha1000names/gofp/v3/Dict"
 
 // BUILD
 
